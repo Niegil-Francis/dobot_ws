@@ -23,4 +23,6 @@ Steps to run the code:
   - rosrun dobot Topic
   - python3 dobot_ws/src/dobot/scripts/Writing_Drawing.py --camera 0
 
+Note: Each time the dobot magician turns on, the coordinates are reset randomly. If you have windows, download the dobot api for windows given [here](https://www.dobot.cc/downloadcenter/dobot-magician.html?sub_cat=72#sub-download), power on the dobot magician and click the home button on the api. Keep the dobot magician on and switch over to ubuntu and the axis will be correctly aligned. I also strongly recommend going through the communication protocol found in the same link.
+
 Sources: [https://hotblackrobotics.github.io/en/blog/2018/06/29/ros-dobot/](https://hotblackrobotics.github.io/en/blog/2018/06/29/ros-dobot/)
