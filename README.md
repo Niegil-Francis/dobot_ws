@@ -1,4 +1,5 @@
 # Dobot Magician ROS control for speech recognition,reading, writing and drawing
+![](ECODOBO_DOBOT_COMPRESSED.gif)
 A repository that contains ROS control of the dobot magician for read, write and draw operations. It integrates speech recognition and text detection, giving a starting point for users to work with the dobot magician via ROS.
 
 This repository has been successfully implemented using ROS-melodic on ubuntu 18.04. Feel free to try it on kinetic as well and it should work.
@@ -26,3 +27,5 @@ Steps to run the code:
 Note: Each time the dobot magician turns on, the coordinates are reset randomly. If you have windows, download the dobot api for windows given [here](https://www.dobot.cc/downloadcenter/dobot-magician.html?sub_cat=72#sub-download), power on the dobot magician and click the home button on the api. Keep the dobot magician on and switch over to ubuntu and the axis will be correctly aligned. I also strongly recommend going through the communication protocol found in the same link.
 
 Sources: [https://hotblackrobotics.github.io/en/blog/2018/06/29/ros-dobot/](https://hotblackrobotics.github.io/en/blog/2018/06/29/ros-dobot/)
+
+
