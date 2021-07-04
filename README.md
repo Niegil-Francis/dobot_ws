@@ -15,7 +15,7 @@ Steps to run the code:
   -  catkin_make
 - Then connect the dobot magician via USB and run the following two commands on separate terminals
   - roscore
-  - rosrun dobot DobotServer dev/ttyUSB0
+  - rosrun dobot DobotServer ttyUSB0
 - Replace dev/ttyUSB0 with whichever port the dobot magician is connected to - try the command: *dmesg | grep tty*  before and after connecting the usb to see which port you need to use
 - Check if the connection is successful, if not run: *sudo chmod a+rw /dev/ttyUSB0* again replacing the port according to whichever port you are connected to
 
