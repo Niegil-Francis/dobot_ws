@@ -50,7 +50,7 @@ void poseCallback(const geometry_msgs::Pose& msg)
   srv_s.request.x = msg.position.x;
   srv_s.request.y = msg.position.y;
   srv_s.request.z = msg.position.z;
-  srv_s.request.r = msg.orientation.r;
+  srv_s.request.r = 10;
   client_sub.call(srv_s);   
 }
 /*
