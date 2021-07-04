@@ -13,7 +13,29 @@
 #include "dobot/SetPTPJumpParams.h"
 #include "dobot/SetPTPCommonParams.h"
 #include "dobot/SetPTPCmd.h"
+#include <librealsense2/rsutil.h>
+#include "std_msgs/MultiArrayLayout.h"
+#include "std_msgs/MultiArrayDimension.h"
 
+#include "std_msgs/Int32MultiArray.h"
+#include <vector>
+#include <stdlib.h>
+#include "dobot/GetPose.h"
+#include "dobot/SetEndEffectorGripper.h"
+
+#include "dobot/SetWAITCmd.h"
+#include "dobot/SetJOGCmd.h"
+#include <cstdlib>
+
+#include <termios.h>
+#include <signal.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/poll.h>
+
+#include <boost/thread/thread.hpp>
+#include <geometry_msgs/Twist.h>
 
 void poseCallback(const geometry_msgs::Pose& msg)
 {
@@ -28,10 +50,71 @@ void poseCallback(const geometry_msgs::Pose& msg)
   srv_s.request.x = msg.position.x;
   srv_s.request.y = msg.position.y;
   srv_s.request.z = msg.position.z;
-  srv_s.request.r = msg.orientation.x;
+  srv_s.request.r = msg.orientation.r;
   client_sub.call(srv_s);   
- 
 }
+/*
+int Arr[5];
+void poseCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
+{
+  ros::NodeHandle m;
+  ros::ServiceClient client_sub;
+  ros::ServiceClient client_grip;
+  ros::ServiceClient client_wait;
+  dobot::SetPTPCmd srv_s;
+
+  client_sub = m.serviceClient<dobot::SetPTPCmd>("/DobotServer/SetPTPCmd");
+  ROS_INFO("I got a pose");
+
+  srv_s.request.ptpMode = 2;
+  int i=0;
+  for(std::vector<int>::const_iterator it = msg->data.begin(); it != msg->data.end(); ++it)
+  {
+		Arr[i] = *it;
+		i++;
+  }
+  srv_s.request.x = Arr[0];
+  srv_s.request.y = Arr[1];
+  srv_s.request.z = Arr[2];
+  srv_s.request.r = Arr[3];
+  if(Arr[4]!= -1)
+    {
+    client_grip = m.serviceClient<dobot::SetEndEffectorGripper>("/DobotServer/SetEndEffectorGripper");
+    dobot::SetEndEffectorGripper srv_g;
+
+    srv_g.request.enableCtrl=1;
+    srv_g.request.grip = Arr[4];
+    srv_g.request.isQueued = 1;
+    client_grip.call(srv_g);
+    if (srv_g.response.result == 0) 
+    {	
+	client_wait = m.serviceClient<dobot::SetWAITCmd>("/DobotServer/SetWAITCmd");
+    	dobot::SetWAITCmd srv_w;
+	srv_w.request.timeout=500;
+	client_wait.call(srv_w);
+    } 
+    }
+   else if(Arr[4]== -1)
+    {
+    client_grip = m.serviceClient<dobot::SetEndEffectorGripper>("/DobotServer/SetEndEffectorGripper");
+    dobot::SetEndEffectorGripper srv_g;
+    srv_g.request.enableCtrl=0;
+    srv_g.request.isQueued = 1;
+    client_grip.call(srv_g);
+    } 
+
+  ROS_INFO("x %d\n",Arr[0]);
+  ROS_INFO("y %d\n",Arr[1]);
+  ROS_INFO("z %d\n",Arr[2]);
+  ROS_INFO("r %d\n",Arr[3]);
+  ROS_INFO("gripper %d\n",Arr[4]);
+
+  
+  client_sub.call(srv_s);   
+}
+*/
+
+
 
 int main(int argc, char **argv)
 {
@@ -95,10 +178,10 @@ int main(int argc, char **argv)
         client = n.serviceClient<dobot::SetPTPCoordinateParams>("/DobotServer/SetPTPCoordinateParams");
         dobot::SetPTPCoordinateParams srv;
 
-        srv.request.xyzVelocity = 100;
-        srv.request.xyzAcceleration = 100;
-        srv.request.rVelocity = 100;
-        srv.request.rAcceleration = 100;
+        srv.request.xyzVelocity = 200;
+        srv.request.xyzAcceleration = 200;
+        srv.request.rVelocity = 200;
+        srv.request.rAcceleration = 200;
         client.call(srv);
     } while (0);
 

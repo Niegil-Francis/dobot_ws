@@ -214,6 +214,8 @@ endif()
 
 
 
+
+
 add_executable(DobotServer src/DobotServer.cpp)
 target_link_libraries(DobotServer ${catkin_LIBRARIES} DobotDll)
 add_dependencies(DobotServer dobot_gencpp)
@@ -226,10 +228,42 @@ add_executable(DobotClient_PTP src/DobotClient_PTP.cpp)
 target_link_libraries(DobotClient_PTP ${catkin_LIBRARIES})
 add_dependencies(DobotClient_PTP dobot_gencpp)
 
+add_executable(DobotClient_JOG_mm src/DobotClient_JOG_mm.cpp)
+target_link_libraries(DobotClient_JOG_mm ${catkin_LIBRARIES})
+add_dependencies(DobotClient_JOG_mm dobot_gencpp)
+
+
+add_executable(Trial src/Trial.cpp)
+target_link_libraries(Trial ${catkin_LIBRARIES})
+add_dependencies(Trial dobot_gencpp)
+
+add_executable(Camera src/Camera_interface.cpp)
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+target_link_libraries(Camera ${catkin_LIBRARIES} ${OpenCV_LIBS})
+add_dependencies(Camera dobot_gencpp)
+
+
+add_executable(inverse src/Inverse_kinematics.cpp)
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+target_link_libraries(inverse ${catkin_LIBRARIES} ${OpenCV_LIBS})
+add_dependencies(inverse dobot_gencpp)
+
+
+add_executable(DobotClient_topic src/DobotClient_topic.cpp)
+target_link_libraries(DobotClient_topic ${catkin_LIBRARIES})
+add_dependencies(DobotClient_topic dobot_gencpp)
+
 
 add_executable(Topic src/Topic.cpp)
 target_link_libraries(Topic ${catkin_LIBRARIES})
 add_dependencies(Topic dobot_gencpp)
+
+
+
+
+
 
 
 ## Declare a C++ library
@@ -271,10 +305,15 @@ add_dependencies(Topic dobot_gencpp)
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+catkin_install_python(PROGRAMS
+   scripts/talker.py
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+ )
+
+catkin_install_python(PROGRAMS
+   scripts/Camera.py
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+ )
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
