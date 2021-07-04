@@ -6,7 +6,7 @@ This repository has been successfully implemented using ROS-melodic on ubuntu 18
 The dobot magician ros demo can be found [here](https://www.dobot.cc/downloadcenter/dobot-magician.html?sub_cat=72#sub-download)
 
 Steps to run the code:
-- Install Ununtu 18.04 on your system via dual boot
+- Install Ununtu 18.04 on your system
 - Install ROS-melodic following the tutorial given [here](http://wiki.ros.org/melodic/Installation/Ubuntu)
 - Then run the following commands
   -  cd 
