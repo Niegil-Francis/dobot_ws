@@ -1,2 +1,0 @@
-dobot
--DCATKIN_DEVEL_PREFIX=/home/niegil/dobot_ws/devel -DCMAKE_INSTALL_PREFIX=/home/niegil/dobot_ws/install -G Unix Makefiles
