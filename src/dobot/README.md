@@ -1,4 +1,4 @@
-# dobot-control
+# dobot
 
 ## Folders and their use-case
 
